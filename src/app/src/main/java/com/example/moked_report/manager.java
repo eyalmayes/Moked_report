@@ -3,6 +3,7 @@ package com.example.moked_report;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 public class manager extends AppCompatActivity  {
 
     TextView nameText;
+    String userName;
+    SharedPreferences sharedPreferences;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -24,6 +27,11 @@ public class manager extends AppCompatActivity  {
         if (extras != null) {
             nameText.setText(extras.getString("name"));
         }
+
+        //screen setting
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        userName = sharedPreferences.getString("userName", null);
+        nameText.setText(userName);
     }
 
     @Override

@@ -4,6 +4,8 @@ import static com.example.moked_report.Machine.machines;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -28,17 +30,19 @@ import java.util.Map;
 
 public class worker extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    SharedPreferences sharedPreferences;
     TextView nameText;
     TextView chooseMachineName;
     ImageView chooseMachineImage;
     TextView problemText;
     Machine courentMachine;
-    int currentMachineNumber;
+    int currentMachineNumber =0;
     Spinner spinnerProblems;
     int spinnerBrakeAutomaticCall = 0;
     Button buttonStop;
     Button buttonStart;
     TextView endText;
+    String userName;
 
     private static final String ID = "ID";
     private static final String WORKER_NAME = "worker name";
@@ -53,13 +57,7 @@ public class worker extends AppCompatActivity implements AdapterView.OnItemSelec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_worker);
 
-        
-        //get worker name from shared pref
         nameText = (TextView) findViewById(R.id.nameText);
-        Bundle extras = getIntent().getExtras();
-        nameText.setText(extras.getString("name"));
-        currentMachineNumber = extras.getInt("currentMachineNumber");
-
         chooseMachineName = findViewById(R.id.chooseMachineName);
         chooseMachineImage = findViewById(R.id.chooseMachineImage);
         spinnerProblems = findViewById(R.id.spinnerProblems);
@@ -68,7 +66,12 @@ public class worker extends AppCompatActivity implements AdapterView.OnItemSelec
         buttonStop = findViewById(R.id.buttonStop);
         endText = findViewById(R.id.endText);
 
+        //screen setting
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        userName = sharedPreferences.getString("userName", null);
+        nameText.setText(userName);
         endText.setVisibility(View.INVISIBLE);
+        Machine.fillArray();
         fillMachineDetails(currentMachineNumber);
 
         Spinner dropdown = findViewById(R.id.spinner1);
