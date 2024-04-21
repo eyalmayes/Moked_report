@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "138171494014",
+    "project_id": "moked-reports",
+    "storage_bucket": "moked-reports.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138171494014:android:1f908c0a14accd5724f22f",
+        "android_client_info": {
+          "package_name": "com.example.moked_report"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDY0cmm-WBNLi7hil_9dSW9JOESycD37M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

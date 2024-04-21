@@ -22,21 +22,19 @@
     <TextView
         android:layout_width="71dp"
         android:layout_height="50dp"
+        android:layout_marginStart="284dp"
+        android:layout_marginTop="237dp"
         android:text="שם : "
         android:textColor="@color/white"
         android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.917"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.327" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextName"
         android:layout_width="211dp"
         android:layout_height="49dp"
-        android:layout_marginStart="108dp"
+        android:layout_marginStart="78dp"
         android:layout_marginTop="232dp"
         android:ems="10"
         android:hint="הקלד כאן את שמך"
@@ -52,13 +50,13 @@
         android:layout_height="60dp"
         android:layout_marginTop="160dp"
         android:layout_marginEnd="40dp"
-        android:text="ברוך הבא!"
-        android:textColor="#A3D4FB"
-        android:textSize="40dp"
         android:shadowColor="#813D81F6"
         android:shadowDx="12"
         android:shadowDy="12"
         android:shadowRadius="15"
+        android:text="ברוך הבא!"
+        android:textColor="#A3D4FB"
+        android:textSize="40dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -70,8 +68,7 @@
         android:layout_marginTop="288dp"
         android:layout_marginEnd="28dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
             android:id="@+id/managerCheck"
@@ -97,11 +94,10 @@
         android:layout_marginEnd="140dp"
         android:layout_marginBottom="188dp"
         android:background="@drawable/custom_button"
+        android:onClick="onClickLogIn"
         android:text="סיימתי"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:onClick="onClickLogIn"
-        />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
     <ImageView

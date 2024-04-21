@@ -36,7 +36,7 @@ public class worker extends AppCompatActivity implements AdapterView.OnItemSelec
     ImageView chooseMachineImage;
     TextView problemText;
     Machine courentMachine;
-    int currentMachineNumber =0;
+    int currentMachineNumber;
     Spinner spinnerProblems;
     int spinnerBrakeAutomaticCall = 0;
     Button buttonStop;
@@ -69,6 +69,7 @@ public class worker extends AppCompatActivity implements AdapterView.OnItemSelec
         //screen setting
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         userName = sharedPreferences.getString("userName", null);
+        currentMachineNumber = sharedPreferences.getInt("LastMachineNumber", 0);
         nameText.setText(userName);
         endText.setVisibility(View.INVISIBLE);
         Machine.fillArray();
@@ -95,6 +96,7 @@ public class worker extends AppCompatActivity implements AdapterView.OnItemSelec
                 //מטפל בלחיצה על בחירת המכונה לעבודה
                 currentMachineNumber = (Integer.parseInt((String) adapterView.getItemAtPosition(pos))) - 1;
                 fillMachineDetails(currentMachineNumber);
+                saveLastMachineToSharedPreference(currentMachineNumber);
             } else {
                 // מטפל בלחיצה על סיבת המשתמש להפסקת פעילות המכונה
                 courentMachine.setyNotInWork((String) adapterView.getItemAtPosition(pos));
@@ -133,11 +135,9 @@ public class worker extends AppCompatActivity implements AdapterView.OnItemSelec
 
 
     public void onClickStart(View view) {
-
         courentMachine.setWork(true);
         fillMachineDetails(currentMachineNumber);
         endText.setText("      מעולה, אפשר לסגור את האפליקציה");
-
     }
 
     public void onClickStop(View view) {
@@ -146,20 +146,7 @@ public class worker extends AppCompatActivity implements AdapterView.OnItemSelec
         problemText.setText("תעדכן סיבת עצירה");
     }
 
-    @Override
-    protected void onPause() {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("name", (String) nameText.getText()).commit();
-        editor.putString("job", "worker");
-        editor.putInt("currentMachineNumber", currentMachineNumber);
 
-//        editor.remove("job");
-        editor.apply();
-
-
-        super.onPause();
-    }
 
     public static String getCurrentDate(){
         Date date = Calendar.getInstance().getTime();
@@ -168,28 +155,10 @@ public class worker extends AppCompatActivity implements AdapterView.OnItemSelec
         return currentTime;
     }
 
-
-
-
-
-
-
-
-    
-
-//קבלת מידע מהdatabase
-
-//       Cursor cursor = dbHelper.getAllData();
-//    if (cursor != null && cursor.moveToFirst()) {
-//        do {
-//            int id = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_ID));
-//            String name = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME));
-//            int age = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_AGE));
-//            // Do something with the data
-//        } while (cursor.moveToNext());
-//        cursor.close();
-//    }
-
-
-
+    public void saveLastMachineToSharedPreference(int currentMachineNumber) {
+        // Save Last Machine Number to shared preferences
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("LastMachineNumber", currentMachineNumber);
+        editor.apply();
+    }
 }

@@ -1,9 +1,9 @@
 package com.example.moked_report;
 
 public class Report {
+    String date;
     String workerName;
     String machinName;
-    String date;
     String status;
     String reason;
 
