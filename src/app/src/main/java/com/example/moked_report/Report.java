@@ -1,7 +1,9 @@
 package com.example.moked_report;
 
+import java.util.Date;
+
 public class Report {
-    String date;
+    Date date;
     String workerName;
     String machinName;
     String status;
@@ -31,11 +33,11 @@ public class Report {
         this.machinName = machinName;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

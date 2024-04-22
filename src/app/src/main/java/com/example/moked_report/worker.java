@@ -1,5 +1,6 @@
 package com.example.moked_report;
 
+import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
 import static com.example.moked_report.Machine.machines;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -103,6 +108,7 @@ public class worker extends AppCompatActivity implements AdapterView.OnItemSelec
                 fillMachineDetails(currentMachineNumber);
                 endText.setVisibility(View.VISIBLE);
                 endText.setText("תודה על הדיווח, אפשר לסגור את האפליקציה");
+                addReportToFireStore("not working");
 
             }
         }
@@ -137,6 +143,7 @@ public class worker extends AppCompatActivity implements AdapterView.OnItemSelec
     public void onClickStart(View view) {
         courentMachine.setWork(true);
         fillMachineDetails(currentMachineNumber);
+        addReportToFireStore("working");
         endText.setText("      מעולה, אפשר לסגור את האפליקציה");
     }
 
@@ -148,11 +155,8 @@ public class worker extends AppCompatActivity implements AdapterView.OnItemSelec
 
 
 
-    public static String getCurrentDate(){
-        Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        String currentTime = dateFormat.format(date);
-        return currentTime;
+    public static Date getCurrentDate(){
+        return new Date();
     }
 
     public void saveLastMachineToSharedPreference(int currentMachineNumber) {
@@ -160,5 +164,27 @@ public class worker extends AppCompatActivity implements AdapterView.OnItemSelec
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("LastMachineNumber", currentMachineNumber);
         editor.apply();
+    }
+
+    public void addReportToFireStore(String status){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference reportsRef = db.collection("reports");
+
+// Add a new document with a generated ID
+        Map<String, Object> report = new HashMap<>();
+        report.put("date", worker.getCurrentDate());
+        report.put("worker name", userName);
+        report.put("machine name", courentMachine.getName());
+        report.put("status", status);
+        report.put("reason for stop", courentMachine.yNotInWork);
+
+        reportsRef.add(report)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d(TAG, "DocumentSnapshot added with ID: " + "report" + reportNum);
+                    Toast.makeText(this, "report added", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Log.w(TAG, "Error adding document", e);
+                });
     }
 }
