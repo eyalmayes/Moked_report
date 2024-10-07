@@ -81,9 +81,10 @@ public class worker extends AppCompatActivity  {
         currentMachineNumber = sharedPreferences.getInt("LastMachineNumber", 0);
         nameText.setText(userName);
         endText.setVisibility(View.INVISIBLE);
+        spinnerProblems.setVisibility(View.VISIBLE);
         Machine.fillArray();
         fillMachineDetails(currentMachineNumber);
-
+        Machine.setMachinesToFireStore();
 
         List<String> items = new ArrayList<>();
         items.add("1");
@@ -119,6 +120,7 @@ public class worker extends AppCompatActivity  {
                     currentMachineNumber = position;
                     fillMachineDetails(currentMachineNumber);
                     saveLastMachineToSharedPreference(currentMachineNumber);
+                    spinnerProblems.setVisibility(View.INVISIBLE);
                 }
             }
             @Override
@@ -218,6 +220,7 @@ public class worker extends AppCompatActivity  {
         courentMachine.setWork(false);
         fillMachineDetails(currentMachineNumber);
         problemText.setText("תעדכן סיבת עצירה");
+        spinnerProblems.setVisibility(View.VISIBLE);
     }
 
 
@@ -251,7 +254,8 @@ public class worker extends AppCompatActivity  {
                     Toast.makeText(this, "report added", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
-                    Log.w(TAG, "Error adding document", e);
+                    Log.w(TAG, "Error adding document" + e.getMessage(), e);
+                    Toast.makeText(this, "report didn't add", Toast.LENGTH_SHORT).show();
                 });
     }
 }

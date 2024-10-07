@@ -1,5 +1,17 @@
 package com.example.moked_report;
 
+import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
+
+import android.util.Log;
+import android.widget.Toast;
+
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Machine {
 
     String name;
@@ -41,6 +53,30 @@ public class Machine {
         machines[18] = new Machine("SL-1",R.drawable.img,"19");
         machines[19] = new Machine("SMART",R.drawable.img,"20");
     }
+
+    public static void setMachinesToFireStore(){      //saving machines array
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        for(int i=0;i<machines.length;i++){
+            Machine m = machines[i];
+            DocumentReference machineRef = db.collection("machines").document(m.name);
+// Add a new document with a generated ID
+            Map<String, Object> machinMap = new HashMap<>();
+            machinMap.put("name", m.name);
+            machinMap.put("number", m.number);
+            machinMap.put("status", "");
+            machinMap.put("problem", "");
+
+            machineRef.set(machinMap)
+                    .addOnSuccessListener(documentReference -> {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + "machinMap" );
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.w(TAG, "Error adding document" + e.getMessage(), e);
+                    });
+        }
+    }
+
 
     public String getName() {
         return name;
