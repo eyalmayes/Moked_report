@@ -84,7 +84,7 @@ public class worker extends AppCompatActivity  {
         spinnerProblems.setVisibility(View.VISIBLE);
         Machine.fillArray();
         fillMachineDetails(currentMachineNumber);
-        Machine.setMachinesToFireStore();
+        //Machine.setMachinesToFireStore(); //to copy machiens to fireStore
 
         List<String> items = new ArrayList<>();
         items.add("1");
@@ -239,7 +239,14 @@ public class worker extends AppCompatActivity  {
     public void addReportToFireStore(String status){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference reportsRef = db.collection("reports");
-
+        DocumentReference machineRef = db.collection("machines").document(String.valueOf(++currentMachineNumber));
+        machineRef.update("status", status,"problem",courentMachine.yNotInWork)
+                .addOnSuccessListener(aVoid -> {
+                    System.out.println("DocumentSnapshot successfully updated!");
+                })
+                .addOnFailureListener(e -> {
+                    System.out.println("Error updating document: " + e.getMessage());
+                });
 // Add a new document with a generated ID
         Map<String, Object> report = new HashMap<>();
         report.put("date", worker.getCurrentDate());

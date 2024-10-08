@@ -59,7 +59,7 @@ public class Machine {
 
         for(int i=0;i<machines.length;i++){
             Machine m = machines[i];
-            DocumentReference machineRef = db.collection("machines").document(m.name);
+            DocumentReference machineRef = db.collection("machines").document(m.number);
 // Add a new document with a generated ID
             Map<String, Object> machinMap = new HashMap<>();
             machinMap.put("name", m.name);

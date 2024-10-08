@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     RadioButton radioGroupManager;
     EditText editTextName;
     Emplee emplee = new Emplee();
-
     SharedPreferences sharedPreferences;
 
     @Override
@@ -39,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         //first enter check
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.clear();
+//        editor.apply();  // Use apply() or commit() to save changes
+
         String userName = sharedPreferences.getString("userName", null);
         if (userName != null) {
             // User already signed in, go to right activity
