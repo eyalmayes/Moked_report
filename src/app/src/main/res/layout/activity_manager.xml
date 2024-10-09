@@ -21,20 +21,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <GridLayout
-        android:id="@+id/gridLayout"
-        android:layout_width="314dp"
-        android:layout_height="600dp"
-        android:layout_gravity="center"
-        android:columnCount="3"
-        android:padding="16dp"
-        android:rowCount="6"
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="400dp"
+        android:layout_height="700dp"
+        android:columnWidth="100dp"
+        android:gravity="center"
+        android:horizontalSpacing="10dp"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameTextM">
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <!-- Squares will be added programmatically -->
-    </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
