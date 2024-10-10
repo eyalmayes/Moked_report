@@ -212,6 +212,7 @@ public class worker extends AppCompatActivity  {
     public void onClickStart(View view) {
         courentMachine.setWork(true);
         fillMachineDetails(currentMachineNumber);
+        courentMachine.setyNotInWork("");
         addReportToFireStore("working");
         endText.setText("      מעולה, אפשר לסגור את האפליקציה");
     }

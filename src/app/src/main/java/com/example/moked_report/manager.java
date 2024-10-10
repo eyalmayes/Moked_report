@@ -1,18 +1,26 @@
 package com.example.moked_report;
 
+import static android.content.ContentValues.TAG;
+import static com.example.moked_report.Machine.machines;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayoutStates;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class manager extends AppCompatActivity  {
 
@@ -20,6 +28,7 @@ public class manager extends AppCompatActivity  {
     String userName;
     SharedPreferences sharedPreferences;
     private static final int SQUARE_COUNT = 20;
+    int chack =-1;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -33,6 +42,18 @@ public class manager extends AppCompatActivity  {
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         userName = sharedPreferences.getString("userName", null);
         nameText.setText(userName);
+
+        Machine.fillArray();
+
+        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);//internt
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        Log.d(ConstraintLayoutStates.TAG, "Internet connection: " + isConnected);
+
+//        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+//                .setPersistenceEnabled(false)
+//                .build();
+//        db.setFirestoreSettings(settings);//offline fire store
 
         GridView gridView = findViewById(R.id.gridView);
         GridAdapter adapter = new GridAdapter(this);

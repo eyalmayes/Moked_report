@@ -1,7 +1,12 @@
 package com.example.moked_report;
 
+import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
+
+import static com.example.moked_report.Machine.machines;
+
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +49,7 @@ public class GridAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.grid_item_manager, parent, false);
         }
+        Machine.updateMachinesArrayFromDataBase(position);
 
         ImageView imageView = convertView.findViewById(R.id.imageView);
         TextView textView = convertView.findViewById(R.id.textView);
@@ -58,9 +64,8 @@ public class GridAdapter extends BaseAdapter {
         if (position == selectedPosition) {
             convertView.setBackgroundColor(Color.GREEN); // Change to the desired color
         } else {
-            convertView.setBackgroundColor(Color.RED); // Default background for non-selected items
+            convertView.setBackgroundColor(Color.TRANSPARENT); // Default background for non-selected items
         }
-
         return convertView;
     }
 }
