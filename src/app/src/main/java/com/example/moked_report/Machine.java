@@ -105,51 +105,53 @@ public class Machine {
     }
 
 
-    public static void updateMachinesArrayFromDataBase(int machineNumber) {
+    public static void updateMachinesArrayFromDataBase() {
         // Initialize Firestore
         db = FirebaseFirestore.getInstance();
-        int finalMachineNumber = machineNumber;
+        for (int i = 0; i < machines.length; i++) {
 
-        // Reference to the document
-        DocumentReference docRef = db.collection("machines").document(String.valueOf(++machineNumber));
+            int finalI = i;
 
-        // Fetch the document
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        // Retrieve the fields as a Map
-                        Map<String, Object> machineData = document.getData();
+            // Use i + 1 to get the desired document reference, but keep i unchanged for other logic
+            DocumentReference docRef = db.collection("machines").document(String.valueOf(i + 1));
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            // Retrieve the fields as a Map
+                            Map<String, Object> machineData = document.getData();
 
-                        // Extract specific fields from the Map
-                        if (machineData != null) {
-                            String problem = (String) machineData.get("problem");
-                            String status = (String) machineData.get("status");
+                            // Extract specific fields from the Map
+                            if (machineData != null) {
+                                String problem = (String) machineData.get("problem");
+                                String status = (String) machineData.get("status");
 
-                            Log.d(TAG, "machine num:" + finalMachineNumber + "Fetched problem: " + problem);
-                            Log.d(TAG, "machine num:" + finalMachineNumber + "Fetched status: " + status);
+                                Log.d(TAG, "machine num:" + finalI + " Fetched problem: " + problem);
+                                Log.d(TAG, "machine num:" + finalI + " Fetched status: " + status);
 
-                            // Update the machines array
-                            machines[finalMachineNumber].yNotInWork = problem;
-                            machines[finalMachineNumber].isWork = "working".equals(status);
+                                // Update the machines array
+                                machines[finalI].yNotInWork = problem;
+                                machines[finalI].isWork = "working".equals(status);
+                            }
+                        } else {
+                            Log.d(TAG, "No such document");
                         }
                     } else {
-                        Log.d(TAG, "No such document");
+                        Log.e(TAG, "Task failed: " + task.getException());
                     }
-                } else {
-                    Log.e(TAG, "Task failed: " + task.getException());
                 }
-            }
-        });
+            });
+        }
     }
+
+
+
 
 
     public static void setMachinesToFireStore(){      //saving machines array
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Log.d(TAG, "Firestore initialized: " + (db != null));
-
 
         for(int i=0;i<machines.length;i++){
             Machine m = machines[i];

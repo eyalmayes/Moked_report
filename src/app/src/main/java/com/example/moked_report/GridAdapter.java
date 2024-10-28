@@ -49,7 +49,6 @@ public class GridAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.grid_item_manager, parent, false);
         }
-        Machine.updateMachinesArrayFromDataBase(position);
 
         ImageView imageView = convertView.findViewById(R.id.imageView);
         TextView textView = convertView.findViewById(R.id.textView);
@@ -61,10 +60,10 @@ public class GridAdapter extends BaseAdapter {
         textView.setText(String.valueOf(position + 1));
 
         // Check if this is the clicked item, and change background color
-        if (position == selectedPosition) {
+        if (machines[position].isWork) {
             convertView.setBackgroundColor(Color.GREEN); // Change to the desired color
         } else {
-            convertView.setBackgroundColor(Color.TRANSPARENT); // Default background for non-selected items
+            convertView.setBackgroundColor(Color.RED); // Default background for non-selected items
         }
         return convertView;
     }

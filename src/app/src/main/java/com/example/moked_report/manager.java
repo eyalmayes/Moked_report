@@ -44,16 +44,7 @@ public class manager extends AppCompatActivity  {
         nameText.setText(userName);
 
         Machine.fillArray();
-
-        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);//internt
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-        Log.d(ConstraintLayoutStates.TAG, "Internet connection: " + isConnected);
-
-//        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-//                .setPersistenceEnabled(false)
-//                .build();
-//        db.setFirestoreSettings(settings);//offline fire store
+        Machine.updateMachinesArrayFromDataBase();
 
         GridView gridView = findViewById(R.id.gridView);
         GridAdapter adapter = new GridAdapter(this);
