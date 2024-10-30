@@ -25,10 +25,14 @@ import android.widget.Toast;
 public class manager extends AppCompatActivity  {
 
     TextView nameText;
+    static TextView machineName;
+    static TextView machineNumber;
+    static TextView workerReported;
+    static TextView reportDate;
+    static TextView status;
     String userName;
     SharedPreferences sharedPreferences;
     private static final int SQUARE_COUNT = 20;
-    int chack =-1;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -37,6 +41,11 @@ public class manager extends AppCompatActivity  {
         setContentView(R.layout.activity_manager);
 
         nameText = (TextView)findViewById(R.id.nameTextM);
+        machineName = findViewById(R.id.machineNameTextView);
+        machineNumber = findViewById(R.id.machineNumTextView);
+        workerReported = findViewById(R.id.workerNameTextView);
+        reportDate = findViewById(R.id.reportDateTextView);
+        status = findViewById(R.id.statusTextView);
 
         //screen setting
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -55,6 +64,7 @@ public class manager extends AppCompatActivity  {
 
 // Set an OnItemClickListener
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @SuppressLint("ResourceAsColor")
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Store the clicked position
@@ -65,5 +75,20 @@ public class manager extends AppCompatActivity  {
                 adapter.notifyDataSetChanged();
             }
         });
+    }
+
+
+    public static void fillDetailsOfChosenMachine(int chosenMachineNumber){
+
+        Machine chosenMachine = machines[chosenMachineNumber];
+
+        machineName.setText(chosenMachine.name);
+        machineNumber.setText(chosenMachine.number);
+        workerReported.setText(chosenMachine.lestWorkerReported);
+        reportDate.setText(chosenMachine.lastReportDate);
+        if(chosenMachine.yNotInWork.isEmpty() )
+            status.setText("machine is working");
+        else
+            status.setText(chosenMachine.yNotInWork);
     }
 }

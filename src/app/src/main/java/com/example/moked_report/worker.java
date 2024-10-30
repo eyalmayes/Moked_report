@@ -84,6 +84,7 @@ public class worker extends AppCompatActivity  {
         spinnerProblems.setVisibility(View.VISIBLE);
         Machine.fillArray();
         fillMachineDetails(currentMachineNumber);
+
         //Machine.setMachinesToFireStore(); //to copy machiens to fireStore
 
         List<String> items = new ArrayList<>();
@@ -107,10 +108,9 @@ public class worker extends AppCompatActivity  {
         items.add("18");
         items.add("19");
         items.add("20");
-        //String[] items = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"};
+
         CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(this, android.R.layout.simple_spinner_item, items);
         spinnerMachines.setAdapter(adapter);
-        //dropdown.setOnItemSelectedListener(this);
         spinnerMachines.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -128,10 +128,6 @@ public class worker extends AppCompatActivity  {
         });
 
 
-        //String[] problems = new String[]{"סיום עבודה", "תקלה", "חלק מביקורת", "הפסקה", "חסר כלי", "צריך עזרת תכנת", "חסר חומר גלם"};
-        //ArrayAdapter<String> adapterProblems = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, problems);
-        //spinnerProblems.setAdapter(adapterProblems);
-        //spinnerProblems.setOnItemSelectedListener(this);
 
         List<String> problems = new ArrayList<>();
         problems.add("סיום עבודה");
@@ -162,32 +158,7 @@ public class worker extends AppCompatActivity  {
         });
     }
 
-    // @Override
-    // public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
 
-    //     if(spinnerBrakeAutomaticCall++ > 1){
-    //         if (((String) adapterView.getItemAtPosition(pos)).length() < 3) {
-    //             //מטפל בלחיצה על בחירת המכונה לעבודה
-    //             currentMachineNumber = (Integer.parseInt((String) adapterView.getItemAtPosition(pos))) - 1;
-    //             fillMachineDetails(currentMachineNumber);
-    //             saveLastMachineToSharedPreference(currentMachineNumber);
-    //         } else {
-    //             // מטפל בלחיצה על סיבת המשתמש להפסקת פעילות המכונה
-    //             courentMachine.setyNotInWork((String) adapterView.getItemAtPosition(pos));
-    //             fillMachineDetails(currentMachineNumber);
-    //             endText.setVisibility(View.VISIBLE);
-    //             endText.setText("תודה על הדיווח, אפשר לסגור את האפליקציה");
-    //             addReportToFireStore("not working");
-
-    //         }
-    //     }
-    // }
-
-
-//    @Override
-//    public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//    }
 
     private void fillMachineDetails(int currentMachineNumber){
         courentMachine = machines[currentMachineNumber];
@@ -241,7 +212,7 @@ public class worker extends AppCompatActivity  {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference reportsRef = db.collection("reports");
         DocumentReference machineRef = db.collection("machines").document(String.valueOf(++currentMachineNumber));
-        machineRef.update("status", status,"problem",courentMachine.yNotInWork)
+        machineRef.update("status", status,"problem",courentMachine.yNotInWork,"worker",userName,"last report date",worker.getCurrentDate())
                 .addOnSuccessListener(aVoid -> {
                     System.out.println("DocumentSnapshot successfully updated!");
                 })

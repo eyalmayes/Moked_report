@@ -27,6 +27,8 @@ public class Machine {
     String number;
     boolean isWork;
     String yNotInWork;
+    String lestWorkerReported;
+    String lastReportDate;
     public static Machine[] machines= new Machine[20];
     static FirebaseFirestore db;
 
@@ -38,7 +40,12 @@ public class Machine {
         this.name = name;
         this.image = image;
         this.number = number;
+        this.yNotInWork = "";
+        this.lastReportDate = "";
+        this.lestWorkerReported = "";
     }
+
+
 
     public String getName() {
         return name;

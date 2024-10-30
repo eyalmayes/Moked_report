@@ -3,9 +3,11 @@ package com.example.moked_report;
 import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
 
 import static com.example.moked_report.Machine.machines;
+import static com.example.moked_report.manager.fillDetailsOfChosenMachine;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.telephony.IccOpenLogicalChannelResponse;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,12 +61,19 @@ public class GridAdapter extends BaseAdapter {
         // Set the number (position + 1 to start from 1)
         textView.setText(String.valueOf(position + 1));
 
-        // Check if this is the clicked item, and change background color
         if (machines[position].isWork) {
             convertView.setBackgroundColor(Color.GREEN); // Change to the desired color
         } else {
             convertView.setBackgroundColor(Color.RED); // Default background for non-selected items
         }
+        // Check if this is the clicked item, and change background color
+        if (position == selectedPosition){
+            Machine.updateMachinesArrayFromDataBase();
+            fillDetailsOfChosenMachine(position);
+        }
+
+
         return convertView;
+
     }
 }
