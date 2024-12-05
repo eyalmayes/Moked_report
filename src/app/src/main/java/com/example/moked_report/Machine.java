@@ -12,11 +12,14 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +43,7 @@ public class Machine {
         this.name = name;
         this.image = image;
         this.number = number;
-        this.yNotInWork = "";
+        this.yNotInWork = "אין דיווחים";
         this.lastReportDate = "";
         this.lestWorkerReported = "";
     }
@@ -134,11 +137,26 @@ public class Machine {
                             if (machineData != null) {
                                 String problem = (String) machineData.get("problem");
                                 String status = (String) machineData.get("status");
+                                String worker = (String) machineData.get("worker");
+                                String lastReportDate = "";
+                                Timestamp timestamp = (Timestamp)machineData.get("last report date");
+                                if (timestamp == null) {
+                                    // Handle null value (e.g., set a default value or log a warning)
+                                    System.out.println("No report date available");
+                                } else{
+                                    Date date = timestamp.toDate();
+                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // Customize the format as needed
+                                    lastReportDate = sdf.format(date);
+                                }
 
                                 Log.d(TAG, "machine num:" + finalI + " Fetched problem: " + problem);
                                 Log.d(TAG, "machine num:" + finalI + " Fetched status: " + status);
+                                Log.d(TAG, "machine num:" + finalI + " Fetched lastReportDate: " + lastReportDate);
+                                Log.d(TAG, "machine num:" + finalI + " Fetched worker: " + worker);
 
                                 // Update the machines array
+                                machines[finalI].lastReportDate = lastReportDate;
+                                machines[finalI].lestWorkerReported = worker;
                                 machines[finalI].yNotInWork = problem;
                                 machines[finalI].isWork = "working".equals(status);
                             }

@@ -67,7 +67,6 @@ public class worker extends AppCompatActivity  {
 
         nameText = (TextView) findViewById(R.id.nameText);
         chooseMachineName = findViewById(R.id.chooseMachineName);
-        chooseMachineImage = findViewById(R.id.chooseMachineImage);
         problemText = findViewById(R.id.problemText);
         buttonStart = findViewById(R.id.buttonStart);
         buttonStop = findViewById(R.id.buttonStop);
@@ -163,7 +162,6 @@ public class worker extends AppCompatActivity  {
     private void fillMachineDetails(int currentMachineNumber){
         courentMachine = machines[currentMachineNumber];
         chooseMachineName.setText(courentMachine.getName());
-        chooseMachineImage.setImageResource(courentMachine.getImage());
         problemText.setText("תעדכן סיבת עצירה");
         endText.setVisibility(View.INVISIBLE);
         if (courentMachine.isWork) {

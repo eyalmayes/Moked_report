@@ -58,6 +58,7 @@ public class manager extends AppCompatActivity  {
         GridView gridView = findViewById(R.id.gridView);
         GridAdapter adapter = new GridAdapter(this);
         gridView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
         // Variable to store the position of the clicked item
         final int[] selectedPosition = {-1};  // -1 means no item is selected initially
@@ -86,9 +87,14 @@ public class manager extends AppCompatActivity  {
         machineNumber.setText(chosenMachine.number);
         workerReported.setText(chosenMachine.lestWorkerReported);
         reportDate.setText(chosenMachine.lastReportDate);
-        if(chosenMachine.yNotInWork.isEmpty() )
+        if(chosenMachine.yNotInWork.isEmpty() ){
             status.setText("machine is working");
-        else
+            status.setTextColor(Color.GREEN);
+        }
+        else{
             status.setText(chosenMachine.yNotInWork);
+            status.setTextColor(Color.RED);
+        }
+
     }
 }

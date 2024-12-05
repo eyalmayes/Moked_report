@@ -72,7 +72,6 @@ public class GridAdapter extends BaseAdapter {
             fillDetailsOfChosenMachine(position);
         }
 
-
         return convertView;
 
     }

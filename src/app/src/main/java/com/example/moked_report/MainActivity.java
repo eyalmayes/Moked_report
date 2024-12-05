@@ -39,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
         //first enter check
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
-        editor.apply();  // Use apply() or commit() to save changes
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.clear();
+//        editor.apply();  // Use apply() or commit() to save changes
 
         String userName = sharedPreferences.getString("userName", null);
         if (userName != null) {

@@ -7,99 +7,7 @@
     android:background="@drawable/login_background"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:layout_width="368dp"
-        android:layout_height="453dp"
-        android:background="@drawable/custom_button"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.498" />
-
-    <TextView
-        android:layout_width="71dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="284dp"
-        android:layout_marginTop="237dp"
-        android:text="שם : "
-        android:textColor="@color/white"
-        android:textSize="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editTextName"
-        android:layout_width="211dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="78dp"
-        android:layout_marginTop="232dp"
-        android:ems="10"
-        android:hint="הקלד כאן את שמך"
-        android:inputType="text"
-        android:textColor="@color/white"
-        android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/wellcome"
-        android:layout_width="187dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="160dp"
-        android:layout_marginEnd="40dp"
-        android:shadowColor="#813D81F6"
-        android:shadowDx="12"
-        android:shadowDy="12"
-        android:shadowRadius="15"
-        android:text="ברוך הבא!"
-        android:textColor="#A3D4FB"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="88dp"
-        android:layout_height="107dp"
-        android:layout_marginTop="288dp"
-        android:layout_marginEnd="28dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <RadioButton
-            android:id="@+id/managerCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="מנהל"
-            android:textColor="@color/white"
-            android:textSize="20dp" />
-
-        <RadioButton
-            android:id="@+id/workerCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="עובד"
-            android:textColor="@color/white"
-            android:textSize="20dp" />
-    </RadioGroup>
-
-    <Button
-        android:id="@+id/sign_in_button"
-        android:layout_width="120dp"
-        android:layout_height="51dp"
-        android:layout_marginEnd="140dp"
-        android:layout_marginBottom="188dp"
-        android:background="@drawable/custom_button"
-        android:onClick="onClickLogIn"
-        android:text="סיימתי"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-
+    <!-- ImageView and Welcome TextView outside the inner ConstraintLayout -->
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="199dp"
@@ -108,5 +16,101 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/moked" />
+
+    <TextView
+        android:id="@+id/wellcome"
+        android:layout_width="230dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="146dp"
+        android:layout_marginEnd="40dp"
+        android:shadowColor="#813D81F6"
+        android:shadowDx="12"
+        android:shadowDy="12"
+        android:shadowRadius="15"
+        android:text="ברוך הבא!"
+        android:textColor="#A3D4FB"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Inner ConstraintLayout containing the rest of the views -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/innerConstraintLayout"
+        android:layout_width="375dp"
+        android:layout_height="451dp"
+        android:background="@drawable/custom_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.498">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="30dp"
+            android:text="שם : "
+            android:textColor="@color/white"
+            android:textSize="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="211dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="50dp"
+            android:ems="10"
+            android:hint="הקלד כאן את שמך"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toStartOf="@+id/textView2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="110dp"
+            android:layout_height="107dp"
+            android:layout_marginTop="127dp"
+            android:layout_marginEnd="26dp"
+            android:gravity="start"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/managerCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="מנהל"
+                android:textColor="@color/white"
+                android:textSize="30dp" />
+
+            <RadioButton
+                android:id="@+id/workerCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="עובד"
+                android:textColor="@color/white"
+                android:textSize="30dp" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/sign_in_button"
+            android:layout_width="135dp"
+            android:layout_height="58dp"
+            android:layout_marginBottom="72dp"
+            android:background="@drawable/custom_button"
+            android:onClick="onClickLogIn"
+            android:text="סיימתי"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
