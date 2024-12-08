@@ -52,7 +52,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="30dp"
-            android:text="שם : "
+            android:text="שם:"
             android:textColor="@color/white"
             android:textSize="40dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -76,8 +76,9 @@
             android:layout_width="110dp"
             android:layout_height="107dp"
             android:layout_marginTop="127dp"
-            android:layout_marginEnd="26dp"
+            android:layout_marginEnd="200dp"
             android:gravity="start"
+            android:layoutDirection="rtl"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -98,18 +99,48 @@
                 android:textSize="30dp" />
         </RadioGroup>
 
+        <EditText
+            android:id="@+id/password_toggle"
+            android:layout_width="211dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="264dp"
+            android:ems="10"
+            android:hint="הקלד כאן סיסמה"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/PasswordText"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:text="סיסמה:"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.722"
+            app:layout_constraintStart_toEndOf="@+id/password_toggle"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
         <Button
             android:id="@+id/sign_in_button"
             android:layout_width="135dp"
             android:layout_height="58dp"
-            android:layout_marginBottom="72dp"
             android:background="@drawable/custom_button"
             android:onClick="onClickLogIn"
             android:text="סיימתי"
             android:textSize="18dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password_toggle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -40,7 +40,6 @@ public class worker extends AppCompatActivity  {
     SharedPreferences sharedPreferences;
     TextView nameText;
     TextView chooseMachineName;
-    ImageView chooseMachineImage;
     TextView problemText;
     Spinner spinnerProblems;
     Spinner spinnerMachines;
@@ -52,13 +51,6 @@ public class worker extends AppCompatActivity  {
     TextView endText;
     String userName;
 
-    private static final String ID = "ID";
-    private static final String WORKER_NAME = "worker name";
-    private static final String MACHINE_NAME = "machin name";
-    private static final String DATE = "date";
-    private static final String STATUS = "status";
-    private static final String REASON = "reason";
-    private static int reportNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,7 +175,7 @@ public class worker extends AppCompatActivity  {
         fillMachineDetails(currentMachineNumber);
         courentMachine.setyNotInWork("");
         addReportToFireStore("working");
-        endText.setText("      מעולה, אפשר לסגור את האפליקציה");
+        endText.setText("מעולה, אפשר לסגור את האפליקציה");
     }
 
     public void onClickStop(View view) {
@@ -227,7 +219,7 @@ public class worker extends AppCompatActivity  {
 
         reportsRef.add(report)
                 .addOnSuccessListener(documentReference -> {
-                    Log.d(TAG, "DocumentSnapshot added with ID: " + "report" + reportNum);
+                    Log.d(TAG, "report DocumentSnapshot added report");
                     Toast.makeText(this, "report added", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {

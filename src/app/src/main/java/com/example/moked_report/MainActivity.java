@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
@@ -26,11 +27,12 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     RadioGroup radioGroup;
-    RadioButton genderradioButton;
     RadioButton radioGroupManager;
     EditText editTextName;
-    Emplee emplee = new Emplee();
+    EditText passwordEditText;
     SharedPreferences sharedPreferences;
+    String workerPassword = "1234";
+    String managerPassword = "4321";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +41,15 @@ public class MainActivity extends AppCompatActivity {
         //first enter check
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.clear();
-//        editor.apply();  // Use apply() or commit() to save changes
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();  // Use apply() or commit() to save changes
 
         String userName = sharedPreferences.getString("userName", null);
         if (userName != null) {
             // User already signed in, go to right activity
             String userRole = sharedPreferences.getString("userRole", null);
+            assert userRole != null;
             if (userRole.equals("manager"))
                 startActivity(new Intent(this, manager.class));
             else
@@ -54,17 +57,21 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // User needs to sign in
             setContentView(R.layout.activity_main);
-            radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
-            //RadioButton checkedRadioButton = (RadioButton)radioGroup.findViewById(radioGroup.getCheckedRadioButtonId());
             radioGroupManager = (RadioButton) findViewById(R.id.managerCheck);
             Button signInButton = findViewById(R.id.sign_in_button);
             editTextName = (EditText) findViewById(R.id.editTextName);
+            passwordEditText = findViewById(R.id.password_toggle);
+            TextView passwordText = findViewById(R.id.PasswordText);
+            radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+
 
             //radioGroup listener
             radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
                     signInButton.setBackgroundResource(R.drawable.rounded_corner);
+                    passwordText.setVisibility(View.VISIBLE);
+                    passwordEditText.setVisibility(View.VISIBLE);
                 }
             });
         }
@@ -82,15 +89,24 @@ public class MainActivity extends AppCompatActivity {
             if (!name.isEmpty()) {
 
                 this.saveNameToSharedPreference(name);
+                String password = passwordEditText.getText().toString().trim();
 
                 if (selectedId == (R.id.managerCheck)) {
-                    this.saveRoleToSharedPreference("manager");
-                    this.addUserToFireStore(name,"manager");
-                    startActivity(new Intent(this, manager.class));
+                    if(password.equals(managerPassword)){
+                        this.saveRoleToSharedPreference("manager");
+                        this.addUserToFireStore(name,"manager");
+                        startActivity(new Intent(this, manager.class));
+                    } else{
+                        Toast.makeText(MainActivity.this, "wrong password", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    this.saveRoleToSharedPreference("worker");
-                    this.addUserToFireStore(name,"worker");
-                    startActivity(new Intent(this, worker.class));
+                    if(password.equals(workerPassword)){
+                        this.saveRoleToSharedPreference("worker");
+                        this.addUserToFireStore(name,"worker");
+                        startActivity(new Intent(this, worker.class));
+                    } else{
+                        Toast.makeText(MainActivity.this, "wrong password", Toast.LENGTH_SHORT).show();
+                    }
                 }
             } else {
                 // Show error message if name field is empty
